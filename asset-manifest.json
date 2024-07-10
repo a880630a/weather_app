@@ -1,10 +1,28 @@
 {
   "files": {
-    "main.js": "/weather_app/static/js/main.615da0b2.js",
+    "main.css": "/weather_app/static/css/main.7fe14b9c.css",
+    "main.js": "/weather_app/static/js/main.0754dfd1.js",
+    "static/media/overcast.jpg": "/weather_app/static/media/overcast.4541a8eb6a8633ce4317.jpg",
+    "static/media/fog2.jpg": "/weather_app/static/media/fog2.3a848d12d540e5826ec3.jpg",
+    "static/media/rain1.jpg": "/weather_app/static/media/rain1.32a074352e0614816634.jpg",
+    "static/media/snow2.jpg": "/weather_app/static/media/snow2.07166376ce9313a11af9.jpg",
+    "static/media/snow1.jpg": "/weather_app/static/media/snow1.9d8ab55fcdc83c4053e0.jpg",
+    "static/media/rain2.jpg": "/weather_app/static/media/rain2.20139d10b8c0b6742c77.jpg",
+    "static/media/clearSky.jpg": "/weather_app/static/media/clearSky.59de78bafcaacd05f731.jpg",
+    "static/media/fog1.jpg": "/weather_app/static/media/fog1.f8dd10943eeb3951e712.jpg",
+    "static/media/rain3.jpg": "/weather_app/static/media/rain3.264db959d9d15c444ff8.jpg",
+    "static/media/weatherDefault.jpg": "/weather_app/static/media/weatherDefault.8374b7e8a91c2dfc1e51.jpg",
+    "static/media/thunderstorm.jpg": "/weather_app/static/media/thunderstorm.ba2011c4ac09bc6ab8a7.jpg",
+    "static/media/Gamaliel.otf": "/weather_app/static/media/Gamaliel.e2d0015ce3a8f3ddc9ae.otf",
+    "static/media/search2.svg": "/weather_app/static/media/search2.17aed7537e4883a96d0ac319015af0a8.svg",
+    "static/media/wind.svg": "/weather_app/static/media/wind.d92b912490ff324c4fad0bd8529cfd5d.svg",
+    "static/media/humidity.svg": "/weather_app/static/media/humidity.9643851a69bed6c3d7637b402ad9525d.svg",
     "index.html": "/weather_app/index.html",
-    "main.615da0b2.js.map": "/weather_app/static/js/main.615da0b2.js.map"
+    "main.7fe14b9c.css.map": "/weather_app/static/css/main.7fe14b9c.css.map",
+    "main.0754dfd1.js.map": "/weather_app/static/js/main.0754dfd1.js.map"
   },
   "entrypoints": [
-    "static/js/main.615da0b2.js"
+    "static/css/main.7fe14b9c.css",
+    "static/js/main.0754dfd1.js"
   ]
 }
