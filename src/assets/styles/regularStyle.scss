@@ -1,0 +1,223 @@
+$breakpoints: (
+    mobile-360: 280px,
+    tablet-719: 719px,
+    desktop-1080: 1080px,
+);
+@mixin rwd($name) {
+    @media screen and (min-width: map-get($breakpoints, $name)) {
+        @content;
+    }
+}
+@mixin regularText($size, $weight) {
+    font-size: $size;
+    font-weight: $weight;
+}
+
+// 標題
+@mixin regularText--Title-bold {
+    @include rwd(mobile-360) {
+        @include regularText(5rem, 700);
+    }
+    @include rwd(tablet-719) {
+        @include regularText(6.4rem, 700);
+    }
+    @include rwd(desktop-1080) {
+        @include regularText(10rem, 700);
+    }
+}
+
+// 毛玻璃內容
+@mixin regularText--cardTitle-regular {
+    @include rwd(mobile-360) {
+        @include regularText(1.3rem, 400);
+    }
+    @include rwd(tablet-719) {
+        @include regularText(2rem, 400);
+    }
+    @include rwd(desktop-1080) {
+        @include regularText(3rem, 500);
+    }
+}
+
+//  cart ///title//
+//購物車清單 //標題
+@mixin regularText--cartTitle-bold {
+    @include rwd(mobile-360) {
+        @include regularText(1.8rem, 700);
+    }
+    @include rwd(tablet-719) {
+        @include regularText(2.6rem, 700);
+    }
+    @include rwd(desktop-1080) {
+        @include regularText(3.6rem, 700);
+    }
+}
+//購物車清單 //價錢
+@mixin regularText--cartTitle-regular {
+    @include rwd(mobile-360) {
+        @include regularText(1.8rem, 400);
+    }
+    @include rwd(tablet-719) {
+        @include regularText(2.2rem, 400);
+    }
+    @include rwd(desktop-1080) {
+        @include regularText(3.6rem, 500);
+    }
+}
+
+//購物車清單附註 //產品詳細規格
+@mixin regularText--cardContent {
+    @include rwd(mobile-360) {
+        @include regularText(1.8rem, 400);
+    }
+    @include rwd(tablet-719) {
+        @include regularText(2rem, 400);
+    }
+    @include rwd(desktop-1080) {
+        @include regularText(2.4rem, 500);
+    }
+}
+
+//old name new regularText--add
+//購物車清單附註標價
+@mixin regularText--cardSubContent {
+    @include rwd(mobile-360) {
+        @include regularText(1.4rem, 400);
+    }
+    @include rwd(tablet-719) {
+        @include regularText(2.2rem, 400);
+    }
+    @include rwd(desktop-1080) {
+        @include regularText(3rem, 500);
+    }
+}
+
+// old name regularText--button
+//購物車 按鈕 //取消//前往/加入
+//產品分類按鈕
+@mixin regularText--button-category-bold {
+    @include rwd(mobile-360) {
+        @include regularText(1.6rem, 700);
+    }
+    @include rwd(tablet-719) {
+        @include regularText(2.2rem, 700);
+    }
+    @include rwd(desktop-1080) {
+        @include regularText(3.6rem, 600);
+    }
+}
+//暫時沒用到
+// @mixin regularText--button-category{
+//     @include rwd(mobile-360) {
+//         @include regularText(1.6rem, 500);
+//     }
+//     @include rwd(tablet-719) {
+//         @include regularText(2.2rem, 400);
+//     }
+//     @include rwd(desktop-1080) {
+//         @include regularText(3.6rem, 400);
+//     }
+// }
+
+// if  card is a button
+//homepage/產品卡片標題
+//SMCart/我的餐點
+@mixin regularText--cardButton-bold {
+    @include rwd(mobile-360) {
+        @include regularText(1.4rem, 700);
+    }
+    @include rwd(tablet-719) {
+        @include regularText(2rem, 700);
+    }
+    @include rwd(desktop-1080) {
+        @include regularText(3rem, 500);
+    }
+}
+//購物車按鈕//SMCart///我的餐點
+@mixin regularText--cardButton {
+    @include rwd(mobile-360) {
+        @include regularText(1.4rem, 400);
+    }
+    @include rwd(tablet-719) {
+        @include regularText(2rem, 400);
+    }
+    @include rwd(desktop-1080) {
+        @include regularText(3rem, 500);
+    }
+}
+
+//抱歉，購物車內沒有任何商品。
+//結帳選項
+@mixin regularText--button-pay {
+    @include regularText(2rem, 400);
+    @include rwd(tablet-719) {
+        @include regularText(2.6rem, 400);
+    }
+    @include rwd(desktop-1080) {
+        @include regularText(4rem, 500);
+    }
+}
+
+%radioRwd {
+    @apply radio-primary radio;
+    margin-right: 3rem;
+    @include rwd(mobile-360) {
+        width: 1.8rem;
+        height: 1.8rem;
+        border-width: 2px;
+    }
+    @include rwd(tablet-719) {
+        width: 3rem;
+        height: 3rem;
+        border-width: 3px;
+    }
+    @include rwd(desktop-1080) {
+        width: 5rem;
+        height: 5rem;
+        border-width: 4px;
+    }
+}
+
+%btnPadding {
+    @include rwd(mobile-360) {
+        padding: 0.6rem 2.2rem;
+    }
+    @include rwd(tablet-719) {
+        padding: 1rem 4rem;
+    }
+    @include rwd(desktop-1080) {
+        padding: 1.8rem 6rem;
+    }
+}
+
+@mixin rwd-rem($property, $mobile, $tablet, $desktop) {
+    @include rwd(mobile-360) {
+        #{$property}: $mobile;
+    }
+    @include rwd(tablet-719) {
+        #{$property}: $tablet;
+    }
+    @include rwd(desktop-1080) {
+        #{$property}: $desktop;
+    }
+}
+
+@mixin rwd-remXY(
+    $property,
+    $mobileX,
+    $mobileY,
+    $tabletX,
+    $tabletY,
+    $desktopX,
+    $desktopY
+) {
+    @include rwd(mobile-360) {
+        #{$property}: $mobileX $mobileY;
+    }
+    @include rwd(tablet-719) {
+        #{$property}: $tabletX $tabletY;
+    }
+    @include rwd(desktop-1080) {
+        #{$property}: $desktopX $desktopY;
+    }
+}
