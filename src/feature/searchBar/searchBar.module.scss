@@ -8,6 +8,7 @@
     .iconContainer {
         background-color: #ffffff30;
         padding: 0.7rem;
+        border-radius: 10px;
         .icon {
             width: auto;
             height: 100%;
@@ -20,10 +21,8 @@
         .inputArea {
             overflow: hidden;
             background-color: transparent;
-            border: wheat;
         }
         &.open {
-            border: wheat;
             background-color: transparent;
 
             grid-template-rows: 1fr;

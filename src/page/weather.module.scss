@@ -1,7 +1,8 @@
 @import "../assets/styles/regularStyle.scss";
 .wrapper {
+    position: fixed;
+    overflow: auto;
     padding: 1rem;
-    padding-top: 1rem;
     width: 100%;
     height: 100dvh;
     background-size: cover;
@@ -10,7 +11,10 @@
     font-size: 2rem;
     display: flex;
     flex-direction: column;
+    transition: 1s;
+
     .cityName {
+        margin-bottom: 1rem;
         justify-content: center;
         align-items: center;
         text-align: center;
@@ -19,7 +23,7 @@
         text-shadow: 0px 0px 4px wheat;
         @include regularText--Title-bold;
     }
-    .weatherInfoContainer {
+    .windHumidityContainer {
         display: flex;
         flex-direction: row;
         gap: 1rem;
@@ -28,12 +32,58 @@
                 @include regularText--cardTitle-regular;
             }
             .iconText {
+                margin-top: 1rem;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 .weatherIcon {
                     width: 50%;
                 }
+            }
+        }
+    }
+    .statusContainer {
+        margin-top: 1rem;
+        @include regularText--cardTitle-regular;
+
+        .statusGroup {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+
+            .statusIcon {
+                width: 40%;
+            }
+            .temperatureGroup {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                .temperatureIcon {
+                    width: 40%;
+                }
+                .tempText {
+                    // @include regularText--cardTitle-regular;
+                    font-size: 3rem;
+                    // text-align: center;
+                }
+            }
+        }
+    }
+    .dateContainer {
+        margin-top: 1rem;
+        .dateGroup {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+            .dateIcon {
+                width: 40%;
+            }
+            .iconSubTitle {
+                text-align: center;
             }
         }
     }

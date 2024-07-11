@@ -13,6 +13,8 @@ import GlassWrapper from "../components/glassWrapper";
 import humidityIcon from "../assets/icon/humidity.svg";
 import windIcon from "../assets/icon/wind.svg";
 import NavBar from "../feature/searchBar/searchBar";
+import temperatureIcon from "../assets/icon/temperature.svg";
+import dateIcon from "../assets/icon/date.svg";
 
 const initWeatherData = {
     city: null,
@@ -20,6 +22,10 @@ const initWeatherData = {
     temperature: null,
     windSpeed: null,
     humidity: null,
+    bgImg: weatherDefault,
+    weatherCodeInfo: null,
+    currentDate: null,
+
     fiveDayRange: [],
     fiveDayTemperature: [],
     fiveDayWeatherCode: [],
@@ -35,6 +41,14 @@ const weatherReducer = (state, action) => {
                 temperature: action.payload.temperature,
                 windSpeed: action.payload.windSpeed,
                 humidity: action.payload.humidity,
+                currentDate: action.payload.currentDate,
+            };
+        case "SET_WEATHER_CODE_INFO":
+            return {
+                ...state,
+                bgImg: action.payload.bgImg,
+                weatherCodeInfo: action.payload.weatherCodeInfo,
+                weatherIcon: action.payload.weatherIcon,
             };
 
         case "SET_FIVE_DAY_RANGE":
@@ -64,8 +78,7 @@ const Weather = () => {
         latitude: null,
         longitude: null,
     });
-    const [weatherCode, setWeatherCode] = useState();
-    const [bgImg, setBgImg] = useState(weatherDefault);
+
     const [weatherInfo, dispatch] = useReducer(weatherReducer, initWeatherData);
 
     // ================ API ====================
@@ -135,19 +148,24 @@ const Weather = () => {
 
     useEffect(() => {
         if (
+            countryPosition &&
+            countryPosition.results &&
             countryHumidity?.current &&
             countryWindSpeed?.current &&
             countryTemperature?.current &&
             countryWeatherCode?.current
         ) {
+            const date = countryWeatherCode.current.time.split("T");
+
             dispatch({
                 type: "SET_WEATHER_DATA",
                 payload: {
-                    city: countryName,
+                    city: countryPosition.results[0].name,
                     weatherCode: countryWeatherCode.current.weather_code,
                     temperature: countryTemperature.current.temperature_2m,
                     windSpeed: countryWindSpeed.current.wind_speed_10m,
                     humidity: countryHumidity.current.relative_humidity_2m,
+                    currentDate: date[0],
                 },
             });
         }
@@ -157,6 +175,7 @@ const Weather = () => {
         countryWindSpeed,
         countryHumidity,
         countryWeatherCode,
+        countryPosition,
     ]);
 
     useEffect(() => {
@@ -164,8 +183,14 @@ const Weather = () => {
             const code = handleWeatherCode(
                 countryWeatherCode.current.weather_code
             );
-            setWeatherCode(code.name);
-            setBgImg(code.imgUrl);
+            dispatch({
+                type: "SET_WEATHER_CODE_INFO",
+                payload: {
+                    bgImg: code.imgUrl,
+                    weatherCodeInfo: code.name,
+                    weatherIcon: code.icon,
+                },
+            });
         }
     }, [countryWeatherCode]);
 
@@ -183,7 +208,7 @@ const Weather = () => {
             <div
                 className={clsx(styles.wrapper)}
                 style={{
-                    backgroundImage: `url(${bgImg})`,
+                    backgroundImage: `url(${weatherInfo.bgImg})`,
                 }}
             >
                 <NavBar
@@ -191,7 +216,7 @@ const Weather = () => {
                     fetchCountryPosition={fetchCountryPosition}
                 />
                 <div className={styles.cityName}>{weatherInfo.city}</div>
-                <div className={styles.weatherInfoContainer}>
+                <div className={styles.windHumidityContainer}>
                     <GlassWrapper>
                         <div className={styles.weatherGroup}>
                             <p className={styles.iconSubTitle}>humidity</p>
@@ -216,6 +241,44 @@ const Weather = () => {
                                 />
                                 {weatherInfo.windSpeed}
                             </div>
+                        </div>
+                    </GlassWrapper>
+                </div>
+                <div className={styles.statusContainer}>
+                    <GlassWrapper>
+                        <p className={styles.iconSubTitle}>
+                            {weatherInfo.weatherCodeInfo}
+                        </p>
+                        <div className={styles.statusGroup}>
+                            <img
+                                className={styles.statusIcon}
+                                src={weatherInfo.weatherIcon}
+                                alt="weather icon"
+                            />
+                            <div className={styles.temperatureGroup}>
+                                <img
+                                    className={styles.temperatureIcon}
+                                    src={temperatureIcon}
+                                    alt="temperature"
+                                />
+                                <p className={styles.tempText}>
+                                    {weatherInfo.temperature}
+                                </p>
+                            </div>
+                        </div>
+                    </GlassWrapper>
+                </div>
+                <div className={styles.dateContainer}>
+                    <GlassWrapper>
+                        <div className={styles.dateGroup}>
+                            <img
+                                className={styles.dateIcon}
+                                src={dateIcon}
+                                alt="date"
+                            />
+                            <p className={styles.iconSubTitle}>
+                                {weatherInfo.currentDate}
+                            </p>
                         </div>
                     </GlassWrapper>
                 </div>

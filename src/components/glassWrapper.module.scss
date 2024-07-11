@@ -13,8 +13,8 @@
         right: 0;
         bottom: 0;
         background: inherit;
-        backdrop-filter: blur(10px); /* 毛玻璃效果 */
-        -webkit-backdrop-filter: blur(10px); /* 毛玻璃效果（適用於Safari） */
+        backdrop-filter: blur(5px); /* 毛玻璃效果 */
+        -webkit-backdrop-filter: blur(5px); /* 毛玻璃效果（適用於Safari） */
         border-radius: inherit; /* 繼承父容器的圓角 */
         z-index: -1;
     }
