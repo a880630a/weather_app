@@ -12,23 +12,25 @@ import clsx from "clsx";
 import GlassWrapper from "../components/glassWrapper";
 import humidityIcon from "../assets/icon/humidity.svg";
 import windIcon from "../assets/icon/wind.svg";
-import NavBar from "../feature/searchBar/searchBar";
+import SearchBar from "../feature/searchBar/SearchBar";
 import temperatureIcon from "../assets/icon/temperature.svg";
 import dateIcon from "../assets/icon/date.svg";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
 
 const initWeatherData = {
     city: null,
     weatherCode: null,
-    temperature: null,
-    windSpeed: null,
-    humidity: null,
+    temperature: { data: null, unit: null },
+    windSpeed: { data: null, unit: null },
+    humidity: { data: null, unit: null },
     bgImg: weatherDefault,
     weatherCodeInfo: null,
     currentDate: null,
-
-    fiveDayRange: [],
-    fiveDayTemperature: [],
-    fiveDayWeatherCode: [],
 };
 
 const weatherReducer = (state, action) => {
@@ -38,9 +40,18 @@ const weatherReducer = (state, action) => {
                 ...state,
                 city: action.payload.city,
                 weatherCode: action.payload.weatherCode,
-                temperature: action.payload.temperature,
-                windSpeed: action.payload.windSpeed,
-                humidity: action.payload.humidity,
+                temperature: {
+                    data: action.payload.temperature.data,
+                    unit: action.payload.temperature.unit,
+                },
+                windSpeed: {
+                    data: action.payload.windSpeed.data,
+                    unit: action.payload.windSpeed.unit,
+                },
+                humidity: {
+                    data: action.payload.humidity.data,
+                    unit: action.payload.humidity.unit,
+                },
                 currentDate: action.payload.currentDate,
             };
         case "SET_WEATHER_CODE_INFO":
@@ -162,9 +173,19 @@ const Weather = () => {
                 payload: {
                     city: countryPosition.results[0].name,
                     weatherCode: countryWeatherCode.current.weather_code,
-                    temperature: countryTemperature.current.temperature_2m,
-                    windSpeed: countryWindSpeed.current.wind_speed_10m,
-                    humidity: countryHumidity.current.relative_humidity_2m,
+                    temperature: {
+                        data: countryTemperature.current.temperature_2m,
+                        unit: countryTemperature.current_units.temperature_2m,
+                    },
+                    windSpeed: {
+                        data: countryWindSpeed.current.wind_speed_10m,
+                        unit: countryWindSpeed.current_units.wind_speed_10m,
+                    },
+                    humidity: {
+                        data: countryHumidity.current.relative_humidity_2m,
+                        unit: countryHumidity.current_units
+                            .relative_humidity_2m,
+                    },
                     currentDate: date[0],
                 },
             });
@@ -203,6 +224,7 @@ const Weather = () => {
     ) {
         return <div>Loading...</div>;
     }
+
     return (
         <div className="App">
             <div
@@ -211,113 +233,161 @@ const Weather = () => {
                     backgroundImage: `url(${weatherInfo.bgImg})`,
                 }}
             >
-                <NavBar
+                <SearchBar
                     handleCountryChange={handleCountryChange}
                     fetchCountryPosition={fetchCountryPosition}
                 />
                 <div className={styles.cityName}>{weatherInfo.city}</div>
-                <div className={styles.windHumidityContainer}>
-                    <GlassWrapper>
-                        <div className={styles.weatherGroup}>
-                            <p className={styles.iconSubTitle}>humidity</p>
-                            <div className={styles.iconText}>
-                                <img
-                                    className={styles.weatherIcon}
-                                    src={humidityIcon}
-                                    alt="humidity"
-                                />
-                                {weatherInfo.humidity}
+                <div className={styles.swiperArea}>
+                    <Swiper
+                        className={styles.swiperContainer}
+                        navigation={true}
+                        modules={[Navigation]}
+                    >
+                        <SwiperSlide>
+                            {" "}
+                            <div className={styles.dataContainer}>
+                                <div className={styles.windHumidityContainer}>
+                                    <GlassWrapper>
+                                        <div className={styles.weatherGroup}>
+                                            <p className={styles.iconSubTitle}>
+                                                humidity
+                                            </p>
+                                            <div className={styles.iconText}>
+                                                <img
+                                                    className={
+                                                        styles.weatherIcon
+                                                    }
+                                                    src={humidityIcon}
+                                                    alt="humidity"
+                                                />
+                                                <div
+                                                    className={
+                                                        styles.weatherText
+                                                    }
+                                                >
+                                                    <p>
+                                                        {
+                                                            weatherInfo.humidity
+                                                                .data
+                                                        }
+                                                    </p>
+                                                    <p className={styles.unit}>
+                                                        {
+                                                            weatherInfo.humidity
+                                                                .unit
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </GlassWrapper>
+                                    <GlassWrapper>
+                                        <div className={styles.weatherGroup}>
+                                            <p className={styles.iconSubTitle}>
+                                                Wind Speed
+                                            </p>
+                                            <div className={styles.iconText}>
+                                                <img
+                                                    className={
+                                                        styles.weatherIcon
+                                                    }
+                                                    src={windIcon}
+                                                    alt="wind"
+                                                />
+                                                <div
+                                                    className={
+                                                        styles.weatherText
+                                                    }
+                                                >
+                                                    <p>
+                                                        {
+                                                            weatherInfo
+                                                                .windSpeed.data
+                                                        }
+                                                    </p>
+                                                    <p className={styles.unit}>
+                                                        {
+                                                            weatherInfo
+                                                                .windSpeed.unit
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </GlassWrapper>
+                                </div>
+                                <div className={styles.statusContainer}>
+                                    <GlassWrapper>
+                                        <p className={styles.iconSubTitle}>
+                                            {weatherInfo.weatherCodeInfo}
+                                        </p>
+                                        <div className={styles.statusGroup}>
+                                            <img
+                                                className={styles.statusIcon}
+                                                src={weatherInfo.weatherIcon}
+                                                alt="weather icon"
+                                            />
+                                            <div
+                                                className={
+                                                    styles.temperatureGroup
+                                                }
+                                            >
+                                                <img
+                                                    className={
+                                                        styles.temperatureIcon
+                                                    }
+                                                    src={temperatureIcon}
+                                                    alt="temperature"
+                                                />
+                                                <div
+                                                    className={
+                                                        styles.weatherText
+                                                    }
+                                                >
+                                                    <p>
+                                                        {
+                                                            weatherInfo
+                                                                .temperature
+                                                                .data
+                                                        }
+                                                    </p>
+                                                    <p className={styles.unit}>
+                                                        {
+                                                            weatherInfo
+                                                                .temperature
+                                                                .unit
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </GlassWrapper>
+                                </div>
+                                <div className={styles.dateContainer}>
+                                    <GlassWrapper>
+                                        <p className={styles.iconSubTitle}>
+                                            date
+                                        </p>
+                                        <div className={styles.dateGroup}>
+                                            <img
+                                                className={styles.dateIcon}
+                                                src={dateIcon}
+                                                alt="date"
+                                            />
+                                            <p className={styles.date}>
+                                                {weatherInfo.currentDate}
+                                            </p>
+                                        </div>
+                                    </GlassWrapper>
+                                </div>
                             </div>
-                        </div>
-                    </GlassWrapper>
-                    <GlassWrapper>
-                        <div className={styles.weatherGroup}>
-                            <p className={styles.iconSubTitle}>Wind Speed</p>
-                            <div className={styles.iconText}>
-                                <img
-                                    className={styles.weatherIcon}
-                                    src={windIcon}
-                                    alt="wind"
-                                />
-                                {weatherInfo.windSpeed}
-                            </div>
-                        </div>
-                    </GlassWrapper>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <FiveDay position={position} />
+                        </SwiperSlide>
+                    </Swiper>
                 </div>
-                <div className={styles.statusContainer}>
-                    <GlassWrapper>
-                        <p className={styles.iconSubTitle}>
-                            {weatherInfo.weatherCodeInfo}
-                        </p>
-                        <div className={styles.statusGroup}>
-                            <img
-                                className={styles.statusIcon}
-                                src={weatherInfo.weatherIcon}
-                                alt="weather icon"
-                            />
-                            <div className={styles.temperatureGroup}>
-                                <img
-                                    className={styles.temperatureIcon}
-                                    src={temperatureIcon}
-                                    alt="temperature"
-                                />
-                                <p className={styles.tempText}>
-                                    {weatherInfo.temperature}
-                                </p>
-                            </div>
-                        </div>
-                    </GlassWrapper>
-                </div>
-                <div className={styles.dateContainer}>
-                    <GlassWrapper>
-                        <div className={styles.dateGroup}>
-                            <img
-                                className={styles.dateIcon}
-                                src={dateIcon}
-                                alt="date"
-                            />
-                            <p className={styles.iconSubTitle}>
-                                {weatherInfo.currentDate}
-                            </p>
-                        </div>
-                    </GlassWrapper>
-                </div>
-                {/* <input
-                    type="text"
-                    onChange={handleCountryChange}
-                    placeholder="Enter country name"
-                />
-                <button onClick={() => fetchCountryPosition()}>確認</button>
-                <div>
-                    {countryPositionLoading && <div>Loading...</div>}
-                    {weatherInfo ? (
-                        <div>
-                            <p>不用顯示但必要的資料</p>
-                            <p>經度:{countryPosition.results[0].latitude}</p>
-                            <p>緯度:{countryPosition.results[0].longitude}</p>
-                            <hr />
-                            <p>要顯示的資料</p>
-                            <p>城市:{countryPosition.results[0].name}</p>
-                            <p>
-                                溫度:{countryTemperature.current.temperature_2m}
-                            </p>
-                            <p>
-                                風速:{countryWindSpeed.current.wind_speed_10m}
-                            </p>
-                            <p>
-                                濕度:
-                                {countryHumidity.current.relative_humidity_2m}
-                            </p>
-                            <p>天氣狀況:{weatherCode}</p>
-                        </div>
-                    ) : (
-                        <div>No results found.</div>
-                    )}
-                </div> */}
-                {/* 5天內容 */}
-                {/* <div>
-                    <FiveDay position={position} />
-                </div> */}
             </div>
         </div>
     );
