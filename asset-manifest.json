@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/weather_app/static/css/main.558e9233.css",
-    "main.js": "/weather_app/static/js/main.af9067ee.js",
+    "main.css": "/weather_app/static/css/main.caa8680f.css",
+    "main.js": "/weather_app/static/js/main.bea47ffe.js",
     "static/media/overcast.jpg": "/weather_app/static/media/overcast.4541a8eb6a8633ce4317.jpg",
     "static/media/fog2.jpg": "/weather_app/static/media/fog2.3a848d12d540e5826ec3.jpg",
     "static/media/rain1.jpg": "/weather_app/static/media/rain1.32a074352e0614816634.jpg",
@@ -27,11 +27,11 @@
     "static/media/cloud.svg": "/weather_app/static/media/cloud.fc8335d8b41dee04a38ee9de582ba1bc.svg",
     "static/media/sun.svg": "/weather_app/static/media/sun.27fc4f9da6e3a0cd05d02d4cae11ee8f.svg",
     "index.html": "/weather_app/index.html",
-    "main.558e9233.css.map": "/weather_app/static/css/main.558e9233.css.map",
-    "main.af9067ee.js.map": "/weather_app/static/js/main.af9067ee.js.map"
+    "main.caa8680f.css.map": "/weather_app/static/css/main.caa8680f.css.map",
+    "main.bea47ffe.js.map": "/weather_app/static/js/main.bea47ffe.js.map"
   },
   "entrypoints": [
-    "static/css/main.558e9233.css",
-    "static/js/main.af9067ee.js"
+    "static/css/main.caa8680f.css",
+    "static/js/main.bea47ffe.js"
   ]
 }
