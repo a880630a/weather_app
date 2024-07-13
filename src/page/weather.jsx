@@ -9,12 +9,13 @@ import FiveDay from "../feature/fiveDay/FiveDay";
 import styles from "./weather.module.scss";
 import weatherDefault from "../assets/images/weatherDefault.jpg";
 import clsx from "clsx";
-import GlassWrapper from "../components/glassWrapper";
+import GlassWrapper from "../components/glassWrapper/glassWrapper";
 import humidityIcon from "../assets/icon/humidity.svg";
 import windIcon from "../assets/icon/wind.svg";
 import SearchBar from "../feature/searchBar/SearchBar";
 import temperatureIcon from "../assets/icon/temperature.svg";
 import dateIcon from "../assets/icon/date.svg";
+import Loader from "../components/loader/loader";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -236,7 +237,7 @@ const Weather = () => {
         HumidityLoading ||
         weatherCodeLoading
     ) {
-        return <div>Loading...</div>;
+        return <Loader />;
     }
 
     return (

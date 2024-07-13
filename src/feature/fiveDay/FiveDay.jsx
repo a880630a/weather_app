@@ -3,8 +3,9 @@ import { useCallback, useEffect, useReducer, useState } from "react";
 import useWeatherInfoFive from "../../hooks/fiveDay/useWeatherInfoFive";
 import { Line } from "react-chartjs-2";
 import styles from "./FiveDay.module.scss";
-import GlassWrapper from "../../components/glassWrapper";
+import GlassWrapper from "../../components/glassWrapper/glassWrapper";
 import { handleWeatherCode } from "../../utils/weatherCode";
+import Loader from "../../components/loader/loader";
 
 const initFiveDayInfo = {
     fiveDayRange: [],
@@ -164,7 +165,7 @@ const FiveDay = ({ position }) => {
     }, [position, refetchAllFiveData]);
 
     if (weatherCodeLoading || temperatureMaxLoading || temperatureMinLoading) {
-        return <div>Loading...</div>;
+        return <Loader />;
     }
     return (
         <div className={styles.wrapper}>
