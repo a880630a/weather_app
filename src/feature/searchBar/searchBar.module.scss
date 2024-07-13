@@ -1,26 +1,44 @@
-.nav {
+@import "../../assets/styles/regularStyle.scss";
+.navContainer {
     width: 100%;
     height: 4rem;
     justify-content: space-around;
     flex-direction: row-reverse;
     display: flex;
+
     top: 0;
     .iconContainer {
         background-color: #ffffff30;
         padding: 0.7rem;
+        width: 50%;
         border-radius: 10px;
+        display: flex;
+        justify-content: center;
         .icon {
-            width: auto;
             height: 100%;
+            width: auto;
         }
     }
     .searchContainer {
         display: grid;
         grid-template-rows: 0fr;
         transition: 1s;
+        width: 100%;
+        @include regularText--cardTitle-regular;
+
         .inputArea {
             overflow: hidden;
             background-color: transparent;
+            .input {
+                border-radius: 10px;
+                background-color: rgba(0, 0, 0, 0.4);
+                padding: 0.5rem;
+                color: #9ca3af;
+                &:active,
+                &:focus {
+                    border: white 1px solid;
+                }
+            }
         }
         &.open {
             background-color: transparent;
