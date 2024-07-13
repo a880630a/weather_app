@@ -1,0 +1,22 @@
+@import "../../assets/styles/regularStyle.scss";
+
+.temperatureGroup {
+    @include regularText--cardContent-regular;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    .temperatureIcon {
+        width: 40%;
+    }
+    .weatherText {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        @include regularText--cardContent-regular;
+
+        .unit {
+            @include regularText--cardUnit-regular;
+        }
+    }
+}

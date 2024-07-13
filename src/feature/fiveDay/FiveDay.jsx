@@ -5,7 +5,7 @@ import { Line } from "react-chartjs-2";
 import styles from "./FiveDay.module.scss";
 import GlassWrapper from "../../components/glassWrapper/glassWrapper";
 import { handleWeatherCode } from "../../utils/weatherCode";
-import Loader from "../../components/loader/loader";
+import Loader from "../../components/loader/allPageLoader";
 
 const initFiveDayInfo = {
     fiveDayRange: [],

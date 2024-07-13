@@ -15,6 +15,7 @@ const getWeatherInfo = (position) => {
     };
     // 獲取當前濕度
     const getHumidity = async () => {
+        console.log("我在這裡");
         const data = await axios.get(
             `${endpoint}&current=relative_humidity_2m`
         );

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import searchIcon from "../../assets/icon/search2.svg";
-import styles from "./SearchBar.module.scss";
+import styles from "./searchBar.module.scss";
 import clsx from "clsx";
 
 const SearchBar = ({ handleCountryChange, fetchCountryPosition }) => {

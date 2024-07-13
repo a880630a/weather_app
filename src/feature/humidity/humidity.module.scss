@@ -1,0 +1,27 @@
+@import "../../assets/styles/regularStyle.scss";
+
+.weatherGroup {
+    .iconSubTitle {
+        @include regularText--cardTitle-regular;
+    }
+    .iconText {
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        .weatherIcon {
+            width: 50%;
+        }
+        .weatherText {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            @include regularText--cardContent-regular;
+
+            .unit {
+                @include regularText--cardUnit-regular;
+            }
+        }
+    }
+}
