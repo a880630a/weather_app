@@ -4,6 +4,7 @@ import useWeatherInfoFive from "../../hooks/fiveDay/useWeatherInfoFive";
 import { Line } from "react-chartjs-2";
 import styles from "./FiveDay.module.scss";
 import GlassWrapper from "../../components/glassWrapper";
+import { handleWeatherCode } from "../../utils/weatherCode";
 
 const initFiveDayInfo = {
     fiveDayRange: [],
@@ -98,9 +99,10 @@ const FiveDay = ({ position }) => {
                         const index = context.dataIndex;
                         const temperature =
                             fiveDayInfo.fiveDayTemperature[index];
-                        const weatherCode =
-                            fiveDayInfo.fiveDayWeatherCode[index];
-                        return `Temperature: ${temperature} °C, Weather Code: ${weatherCode}`;
+                        const weatherCondition = handleWeatherCode(
+                            fiveDayInfo.fiveDayWeatherCode[index]
+                        );
+                        return `Temperature: ${temperature} °C, Weather condition: ${weatherCondition.name}`;
                     },
                 },
             },

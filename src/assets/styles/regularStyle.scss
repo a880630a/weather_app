@@ -1,5 +1,5 @@
 $breakpoints: (
-    mobile-360: 280px,
+    mobile-360: 360px,
     tablet-719: 719px,
     desktop-1080: 1080px,
 );
@@ -22,7 +22,7 @@ $breakpoints: (
         @include regularText(6.4rem, 700);
     }
     @include rwd(desktop-1080) {
-        @include regularText(10rem, 700);
+        @include regularText(5rem, 700);
     }
 }
 
@@ -35,7 +35,7 @@ $breakpoints: (
         @include regularText(2rem, 600);
     }
     @include rwd(desktop-1080) {
-        @include regularText(3rem, 700);
+        @include regularText(2rem, 700);
     }
 }
 
@@ -48,7 +48,7 @@ $breakpoints: (
         @include regularText(4rem, 400);
     }
     @include rwd(desktop-1080) {
-        @include regularText(6rem, 500);
+        @include regularText(4rem, 500);
     }
 }
 

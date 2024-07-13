@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import useGetCountryPosition from "../hooks/countryHook";
 import useGetTemperature from "../hooks/useGetTemperature";
 import useGetWindSpeed from "../hooks/useGetWindSpeed";
@@ -61,21 +61,10 @@ const weatherReducer = (state, action) => {
                 weatherCodeInfo: action.payload.weatherCodeInfo,
                 weatherIcon: action.payload.weatherIcon,
             };
-
-        case "SET_FIVE_DAY_RANGE":
+        case "SET_BG_IMG":
             return {
                 ...state,
-                fiveDayRange: action.payload,
-            };
-        case "SET_FIVE_DAY_TEMPERATURE":
-            return {
-                ...state,
-                fiveDayTemperature: action.payload,
-            };
-        case "SET_FIVE_DAY_WEATHER_CODE":
-            return {
-                ...state,
-                fiveDayWeatherCode: action.payload,
+                bgImg: action.payload,
             };
         default:
             console.error("Unknown action");
@@ -91,6 +80,31 @@ const Weather = () => {
     });
 
     const [weatherInfo, dispatch] = useReducer(weatherReducer, initWeatherData);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    // 取得目前螢幕寬度並更改背景圖片
+    const handleWidth = () => {
+        const newWidth = window.innerWidth;
+        setWindowWidth(newWidth);
+
+        if (weatherInfo.weatherCodeInfo) {
+            const code = handleWeatherCode(weatherInfo.weatherCode);
+            const newBgImg = newWidth < 1080 ? code.imgUrl : code.imgUrlDT;
+            dispatch({
+                type: "SET_BG_IMG",
+                payload: newBgImg,
+            });
+        }
+    };
+
+    // 當畫面寬度有變化時，更新 windowWidth
+    useEffect(() => {
+        window.addEventListener("resize", handleWidth);
+
+        return () => {
+            window.removeEventListener("resize", handleWidth);
+        };
+    }, [windowWidth, weatherInfo.weatherCode]);
 
     // ================ API ====================
     const {
@@ -207,13 +221,13 @@ const Weather = () => {
             dispatch({
                 type: "SET_WEATHER_CODE_INFO",
                 payload: {
-                    bgImg: code.imgUrl,
+                    bgImg: windowWidth < 1080 ? code.imgUrl : code.imgUrlDT,
                     weatherCodeInfo: code.name,
                     weatherIcon: code.icon,
                 },
             });
         }
-    }, [countryWeatherCode]);
+    }, [countryWeatherCode, windowWidth]);
 
     if (
         countryPositionLoading ||
