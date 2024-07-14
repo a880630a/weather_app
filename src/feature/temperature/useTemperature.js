@@ -1,8 +1,8 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useCallback } from "react";
 import { WeatherContext } from "../../context/WeatherContext";
 import useGetTemperature from "../../hooks/useGetTemperature";
 
-const useTemperature = ({ position }) => {
+const useTemperature = (position) => {
     const {
         isLoading: temperatureLoading,
         countryTemperature,
@@ -11,27 +11,31 @@ const useTemperature = ({ position }) => {
 
     const { dispatch } = useContext(WeatherContext);
 
+    // 使用 useCallback 確保 fetchCountryTemperature 的穩定性
+    const fetchTemperature = useCallback(() => {
+        if (position.latitude !== null && position.longitude !== null) {
+            fetchCountryTemperature();
+        }
+    }, [fetchCountryTemperature, position.latitude, position.longitude]);
+
     // 更新溫度
     useEffect(() => {
-        if (
-            position &&
-            position.latitude !== null &&
-            position.longitude !== null
-        )
-            fetchCountryTemperature();
-    }, [fetchCountryTemperature, position]);
+        fetchTemperature();
+    }, [fetchTemperature]);
 
     // 溫度若更新也一併更新 context 內容
     useEffect(() => {
-        dispatch({
-            type: "SET_HUMIDITY",
-            payload: {
-                temperature: {
-                    data: countryTemperature.current.temperature_2m,
-                    unit: countryTemperature.current_units.temperature_2m,
+        if (countryTemperature?.current && countryTemperature?.current_units) {
+            dispatch({
+                type: "SET_TEMPERATURE",
+                payload: {
+                    temperature: {
+                        data: countryTemperature.current.temperature_2m,
+                        unit: countryTemperature.current_units.temperature_2m,
+                    },
                 },
-            },
-        });
+            });
+        }
     }, [countryTemperature, dispatch]);
 
     return {

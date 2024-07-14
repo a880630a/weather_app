@@ -4,8 +4,8 @@ import dateIcon from "../../assets/icon/date.svg";
 import useDate from "./useDate";
 import PureLoader from "../../components/loader/pureLoader";
 
-const Date = () => {
-    const { date, dateLoading } = useDate();
+const Date = ({position}) => {
+    const { date, dateLoading } = useDate(position);
     if (dateLoading) {
         return <PureLoader />;
     }

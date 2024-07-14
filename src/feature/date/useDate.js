@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { WeatherContext } from "../../context/WeatherContext";
 import useGetWeatherCode from "../../hooks/useGetWeatherCode";
 
-const useDate = ({ position }) => {
+const useDate = (position) => {
     const [date, setDate] = useState(null);
     const {
         isLoading,
@@ -21,12 +21,14 @@ const useDate = ({ position }) => {
 
     // 更新到 context
     useEffect(() => {
-        dispatch({
-            type: "SET_CURRENT_DATE",
-            payload: {
-                currentDate: date,
-            },
-        });
+        if (countryWeatherCode) {
+            dispatch({
+                type: "SET_CURRENT_DATE",
+                payload: {
+                    currentDate: date,
+                },
+            });
+        }
     }, [countryWeatherCode, date, dispatch]);
 
     return { dateLoading: isLoading, date };

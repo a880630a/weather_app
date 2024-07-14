@@ -21,16 +21,22 @@ const weatherReducer = (state, action) => {
                 city: action.payload.city,
                 weatherCode: action.payload.weatherCode,
                 temperature: {
-                    data: action.payload.temperature.data,
-                    unit: action.payload.temperature.unit,
+                    data:
+                        action.payload.temperature?.data ||
+                        state.temperature.data,
+                    unit:
+                        action.payload.temperature?.unit ||
+                        state.temperature.unit,
                 },
                 windSpeed: {
-                    data: action.payload.windSpeed.data,
-                    unit: action.payload.windSpeed.unit,
+                    data:
+                        action.payload.windSpeed?.data || state.windSpeed.data,
+                    unit:
+                        action.payload.windSpeed?.unit || state.windSpeed.unit,
                 },
                 humidity: {
-                    data: action.payload.humidity.data,
-                    unit: action.payload.humidity.unit,
+                    data: action.payload.humidity?.data || state.humidity.data,
+                    unit: action.payload.humidity?.unit || state.humidity.unit,
                 },
                 currentDate: action.payload.currentDate,
             };
@@ -38,31 +44,30 @@ const weatherReducer = (state, action) => {
             return {
                 ...state,
                 humidity: {
-                    data: action.payload.humidity.data,
-                    unit: action.payload.humidity.unit,
+                    data: action.payload?.data || state.humidity.data,
+                    unit: action.payload?.unit || state.humidity.unit,
                 },
             };
         case "SET_WIND_SPEED":
             return {
                 ...state,
                 windSpeed: {
-                    data: action.payload.windSpeed.data,
-                    unit: action.payload.windSpeed.unit,
+                    data: action.payload?.data || state.windSpeed.data,
+                    unit: action.payload?.unit || state.windSpeed.unit,
                 },
             };
-
         case "SET_TEMPERATURE":
             return {
                 ...state,
                 temperature: {
-                    data: action.payload.temperature.data,
-                    unit: action.payload.temperature.unit,
+                    data: action.payload?.data || state.temperature.data,
+                    unit: action.payload?.unit || state.temperature.unit,
                 },
             };
         case "SET_CURRENT_DATE":
             return {
                 ...state,
-                currentDate: action.payload,
+                currentDate: action.payload || state.currentDate,
             };
         case "SET_WEATHER_CODE_INFO":
             return {

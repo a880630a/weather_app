@@ -187,7 +187,7 @@ const Weather = () => {
                                     </div>
                                     <div className={styles.dateContainer}>
                                         <GlassWrapper>
-                                            <Date />
+                                            <Date position={position} />
                                         </GlassWrapper>
                                     </div>
                                 </div>
