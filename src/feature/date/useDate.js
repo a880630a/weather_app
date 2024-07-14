@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import { WeatherContext } from "../../context/WeatherContext";
 import useGetWeatherCode from "../../hooks/useGetWeatherCode";
 
@@ -14,22 +14,14 @@ const useDate = (position) => {
     // 更新日期
     useEffect(() => {
         if (countryWeatherCode?.current) {
-            const tempDate = countryWeatherCode.current.time.split("T");
+            const tempDate = countryWeatherCode.current.time.split("T")[0];
             setDate(tempDate);
-        }
-    }, [countryWeatherCode, date]);
-
-    // 更新到 context
-    useEffect(() => {
-        if (countryWeatherCode) {
             dispatch({
                 type: "SET_CURRENT_DATE",
-                payload: {
-                    currentDate: date,
-                },
+                payload: tempDate,
             });
         }
-    }, [countryWeatherCode, date, dispatch]);
+    }, [countryWeatherCode, dispatch]);
 
     return { dateLoading: isLoading, date };
 };

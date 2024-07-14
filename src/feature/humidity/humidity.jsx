@@ -18,8 +18,10 @@ const Humidity = ({ position }) => {
                     alt="humidity"
                 />
                 <div className={styles.weatherText}>
-                    <p>{countryHumidity.data}</p>
-                    <p className={styles.unit}>{countryHumidity.unit}</p>
+                    <p>{countryHumidity.current.relative_humidity_2m}</p>
+                    <p className={styles.unit}>
+                        {countryHumidity.current_units.relative_humidity_2m}
+                    </p>
                 </div>
             </div>
         </div>

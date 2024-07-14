@@ -4,9 +4,8 @@ import PureLoader from "../../components/loader/pureLoader";
 import useTemperature from "./useTemperature";
 import temperatureIcon from "../../assets/icon/temperature.svg";
 
-const Temperature = (position) => {
+const Temperature = ({ position }) => {
     const { temperatureLoading, countryTemperature } = useTemperature(position);
-    console.log("🚀 ~ Temperature ~ countryTemperature:", countryTemperature);
     if (temperatureLoading) {
         return <PureLoader />;
     }

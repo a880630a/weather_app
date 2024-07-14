@@ -3,11 +3,11 @@ import searchIcon from "../../assets/icon/search2.svg";
 import styles from "./searchBar.module.scss";
 import clsx from "clsx";
 
-const SearchBar = ({ handleCountryChange, fetchCountryPosition }) => {
+const SearchBar = ({ handleCityNameChange, fetchCountryPosition }) => {
     const [openAccordion, setOpenAccordion] = useState(false);
     const cityRef = useRef(null);
 
-    // debounce 每兩秒才call api
+    // debounce 每3秒才call api
     let debounceTimer;
     useEffect(() => {
         if (cityRef.current.value) {
@@ -15,7 +15,7 @@ const SearchBar = ({ handleCountryChange, fetchCountryPosition }) => {
             // eslint-disable-next-line react-hooks/exhaustive-deps
             debounceTimer = setTimeout(() => {
                 fetchCountryPosition(cityRef.current.value);
-            }, 2000);
+            }, 3000);
         }
     }, [fetchCountryPosition, cityRef.current?.value]);
 
@@ -37,9 +37,9 @@ const SearchBar = ({ handleCountryChange, fetchCountryPosition }) => {
                 <div className={styles.inputArea}>
                     <input
                         ref={cityRef}
+                        onChange={handleCityNameChange}
                         className={styles.input}
                         type="text"
-                        onChange={handleCountryChange}
                         placeholder="Enter country name"
                     ></input>
                     {/* <button onClick={fetchCountryPosition}>confirm</button> */}

@@ -6,6 +6,7 @@ import windIcon from "../../assets/icon/wind.svg";
 
 const WindSpeed = ({ position }) => {
     const { windSpeedLoading, countryWindSpeed } = useWindSpeed(position);
+    console.log("🚀 ~ WindSpeed ~ countryWindSpeed:", countryWindSpeed);
     if (windSpeedLoading) {
         return <PureLoader />;
     }
@@ -15,8 +16,10 @@ const WindSpeed = ({ position }) => {
             <div className={styles.iconText}>
                 <img className={styles.weatherIcon} src={windIcon} alt="wind" />
                 <div className={styles.weatherText}>
-                    <p>{countryWindSpeed.data}</p>
-                    <p className={styles.unit}>{countryWindSpeed.unit}</p>
+                    <p>{countryWindSpeed.current.wind_speed_10m}</p>
+                    <p className={styles.unit}>
+                        {countryWindSpeed.current_units.wind_speed_10m}
+                    </p>
                 </div>
             </div>
         </div>

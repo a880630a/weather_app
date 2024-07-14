@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import useGetCountryPosition from "../hooks/countryHook";
 import useGetWeatherCode from "../hooks/useGetWeatherCode";
 import { handleWeatherCode } from "../utils/weatherCode";
@@ -27,8 +27,13 @@ const Weather = () => {
     });
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+    // 更新cityName
+    const handleCityNameChange = (e) => {
+        setCountryName(e.target.value);
+    };
+
     // 取得目前螢幕寬度並更改背景圖片
-    const handleWidth = () => {
+    const handleWidth = useCallback(() => {
         const newWidth = window.innerWidth;
         setWindowWidth(newWidth);
 
@@ -40,7 +45,7 @@ const Weather = () => {
                 payload: newBgImg,
             });
         }
-    };
+    }, [weatherInfo.weatherCode, weatherInfo.weatherCodeInfo, dispatch]);
 
     // 當畫面寬度有變化時，更新 windowWidth
     useEffect(() => {
@@ -49,8 +54,7 @@ const Weather = () => {
         return () => {
             window.removeEventListener("resize", handleWidth);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [windowWidth, weatherInfo.weatherCode]);
+    }, [handleWidth]);
 
     // ================ API ====================
     const {
@@ -67,26 +71,18 @@ const Weather = () => {
 
     // ================ API ====================
 
-    const handleCountryChange = (e) => {
-        setCountryName(e.target.value);
-    };
-
+    // 更新 position
     useEffect(() => {
         if (countryPosition && countryPosition.results) {
-            console.log("countryPosition", countryPosition);
             setPosition({
                 latitude: countryPosition.results[0].latitude,
                 longitude: countryPosition.results[0].longitude,
             });
         }
-    }, [countryPosition, countryName]);
+    }, [countryPosition]);
 
     useEffect(() => {
-        if (
-            position &&
-            position.latitude !== null &&
-            position.longitude !== null
-        ) {
+        if (position.latitude !== null && position.longitude !== null) {
             fetchWeatherCode();
         }
     }, [fetchWeatherCode, position]);
@@ -104,12 +100,11 @@ const Weather = () => {
                 payload: {
                     city: countryPosition.results[0].name,
                     weatherCode: countryWeatherCode.current.weather_code,
-
                     currentDate: date[0],
                 },
             });
         }
-    }, [countryName, countryWeatherCode, countryPosition, dispatch]);
+    }, [countryWeatherCode, countryPosition, dispatch]);
 
     useEffect(() => {
         if (countryWeatherCode?.current) {
@@ -141,7 +136,7 @@ const Weather = () => {
                     }}
                 >
                     <SearchBar
-                        handleCountryChange={handleCountryChange}
+                        handleCityNameChange={handleCityNameChange}
                         fetchCountryPosition={fetchCountryPosition}
                     />
                     <div className={styles.cityName}>{weatherInfo.city}</div>
@@ -152,7 +147,6 @@ const Weather = () => {
                             modules={[Navigation]}
                         >
                             <SwiperSlide>
-                                {" "}
                                 <div className={styles.dataContainer}>
                                     <div
                                         className={styles.windHumidityContainer}
